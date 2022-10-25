@@ -33,6 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Scaffold(
           extendBodyBehindAppBar: true,
           appBar: AppBar(
+            leading: Container(),
             backgroundColor: Colors.transparent,
             elevation: 0,
             toolbarHeight: 140,
@@ -86,7 +87,9 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               FloatingActionButton(
                 heroTag: "3",
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, "/reportedList");
+                },
                 child: Icon(Icons.reset_tv),
               ),
             ],

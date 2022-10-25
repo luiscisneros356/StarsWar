@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:personajes_star_war/routes/routes.dart';
+import 'package:personajes_star_war/utils/hive.dart';
 import 'package:personajes_star_war/utils/style.dart';
 import 'package:personajes_star_war/widgets/card_people.dart';
 import 'package:provider/provider.dart';
@@ -85,6 +86,7 @@ class _DetailsScreenState extends State<DetailsScreen> with SingleTickerProvider
                       data.sendResult().then((value) {
                         animationController.stop();
                         if (value) {
+                          Boxes.addPeople(data.people);
                           Future.delayed(Duration(seconds: 2)).then((value) =>
                               showDialog(context: context, builder: (context) => CustomDialog()));
                         } else {

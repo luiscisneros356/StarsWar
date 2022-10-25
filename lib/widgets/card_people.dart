@@ -19,7 +19,6 @@ class PeopleCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final prov = Provider.of<ProviderData>(context);
     return Container(
       padding: EdgeInsets.all(8),
       margin: EdgeInsets.all(12),
@@ -38,7 +37,8 @@ class PeopleCard extends StatelessWidget {
             alignment: Alignment.center,
             children: [
               ClipRRect(
-                  borderRadius: BorderRadius.all(Radius.circular(100)), child: people.imageGender),
+                  borderRadius: BorderRadius.all(Radius.circular(100)),
+                  child: people.imageGender(people.gender)),
               Positioned(
                   top: 10,
                   right: 5,
@@ -50,7 +50,7 @@ class PeopleCard extends StatelessWidget {
                           color: Colors.primaries[Random().nextInt(Colors.primaries.length)],
                           borderRadius: BorderRadius.all(Radius.circular(100))),
                       child: Text(
-                        people.gender.toUpperCase(),
+                        people.gender != null ? people.gender!.toUpperCase() : "",
                         style: AppTextStyle.subTitle(),
                       ))),
             ],

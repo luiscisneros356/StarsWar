@@ -3,6 +3,7 @@ import 'dart:developer' as dev;
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+
 import 'package:http/http.dart' as http;
 import 'package:personajes_star_war/models/paginated_result.dart';
 import 'package:personajes_star_war/models/people.dart';
@@ -11,7 +12,7 @@ import '../widgets/people_data.dart';
 
 class ProviderData extends ChangeNotifier {
   List<People> listPeople = [];
-  List<People?> reportedListPeople = [];
+  // List<People?> reportedListPeople = [];
   List<Widget> datos = [];
   int _page = 0;
   int get page => _page;
@@ -75,7 +76,7 @@ class ProviderData extends ChangeNotifier {
 
   Future<List<People>> getResults() async {
     _page++;
-    print(page);
+
     if (_page == 9) {
       listPeople.clear();
       _page = 1;
@@ -107,14 +108,9 @@ class ProviderData extends ChangeNotifier {
 
     final resp = await http.post(url, body: body);
 
-    print(resp.body);
-    print(resp.statusCode);
     if (resp.statusCode == 200 || resp.statusCode == 201) {
       print("Enviado");
-      peopleReported?.edited = DateTime.now();
-      reportedListPeople.add(peopleReported);
-      setPeopleReported(null);
-      notifyListeners();
+
       return true;
     } else {
       print("No funciono");
@@ -135,14 +131,14 @@ class ProviderData extends ChangeNotifier {
     });
     dev.log(peopleData.toString());
 
-    int index = 0;
+    int emojiIndex = 0;
     peopleData.forEach((key, value) {
       datos.add(PeopleData(
         keey: key,
         value: value,
-        emoji: emojis[index],
+        emoji: emojis[emojiIndex],
       ));
-      index++;
+      emojiIndex++;
     });
   }
 }

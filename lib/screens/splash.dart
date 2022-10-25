@@ -32,7 +32,7 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
 
     Future.delayed(Duration(seconds: 5)).then((value) {
       // Navigator.pushReplacementNamed(context, RoutesApp.home);
-      // Navigator.pushNamed(context, RoutesApp.home);
+
       // Hive.openBox("hola");
       // Box box = Hive.box("nombre");
       // box.put("nombre", "Luis");
@@ -54,24 +54,26 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
     animationController.forward();
 
     return Scaffold(
-      body: Container(
-        height: mq.height,
-        width: mq.width,
-        alignment: Alignment.center,
-        child: AnimatedBuilder(
-          animation: animationController,
-          builder: (BuildContext context, Widget? child) {
-            return Transform.scale(
-                scale: scale.value,
-                child: Transform.rotate(
-                    angle: rotate.value,
-                    child: AnimatedOpacity(
-                        opacity: opacity.value,
-                        duration: Duration(seconds: 5),
-                        child: ImageAsset(asset: "logo"))));
-          },
+        body: Container(
+          height: mq.height,
+          width: mq.width,
+          alignment: Alignment.center,
+          child: AnimatedBuilder(
+            animation: animationController,
+            builder: (BuildContext context, Widget? child) {
+              return Transform.scale(
+                  scale: scale.value,
+                  child: Transform.rotate(
+                      angle: rotate.value,
+                      child: AnimatedOpacity(
+                          opacity: opacity.value,
+                          duration: Duration(seconds: 5),
+                          child: ImageAsset(asset: "logo"))));
+            },
+          ),
         ),
-      ),
-    );
+        floatingActionButton: FloatingActionButton(
+          onPressed: (() => Navigator.pushNamed(context, RoutesApp.home)),
+        ));
   }
 }

@@ -1,42 +1,49 @@
 import 'package:flutter/cupertino.dart';
+import 'package:hive/hive.dart';
 import 'package:personajes_star_war/utils/image_assets.dart';
 
+part 'people.g.dart';
+
+@HiveType(typeId: 0)
 class People {
   People({
     required this.name,
-    required this.height,
-    required this.mass,
-    required this.hairColor,
-    required this.skinColor,
-    required this.eyeColor,
-    required this.birthYear,
-    required this.gender,
-    required this.homeworld,
-    required this.films,
-    required this.species,
-    required this.vehicles,
-    required this.starships,
-    required this.created,
-    required this.edited,
-    required this.url,
+    this.height,
+    this.mass,
+    this.hairColor,
+    this.skinColor,
+    this.eyeColor,
+    this.birthYear,
+    this.gender,
+    this.homeworld,
+    this.films,
+    this.species,
+    this.vehicles,
+    this.starships,
+    this.created,
+    this.edited,
+    this.url,
   });
-
+  @HiveField(0)
   final String name;
-  final String height;
-  final String mass;
-  final String hairColor;
-  final String skinColor;
-  final String eyeColor;
-  final String birthYear;
-  final String gender;
-  final String homeworld;
-  final List<String> films;
-  final List<dynamic> species;
-  final List<dynamic> vehicles;
-  final List<String> starships;
-  final DateTime created;
-  DateTime edited;
-  final String url;
+  final String? height;
+  final String? mass;
+  final String? hairColor;
+  final String? skinColor;
+  final String? eyeColor;
+  final String? birthYear;
+  @HiveField(1)
+  final String? gender;
+  final String? homeworld;
+  final List<String>? films;
+  final List<dynamic>? species;
+  final List<dynamic>? vehicles;
+  final List<String>? starships;
+
+  final DateTime? created;
+  @HiveField(2)
+  final DateTime? edited;
+  final String? url;
 
   factory People.fromJson(Map<String, dynamic> json) => People(
         name: json["name"],
@@ -67,20 +74,16 @@ class People {
         "birth_year": birthYear,
         "gender": gender,
         "homeworld": homeworld,
-        "films": List<dynamic>.from(films.map((x) => x)),
-        "species": List<dynamic>.from(species.map((x) => x)),
-        "vehicles": List<dynamic>.from(vehicles.map((x) => x)),
-        "starships": List<dynamic>.from(starships.map((x) => x)),
-        "created": created.toIso8601String(),
-        "edited": edited.toIso8601String(),
+        "films": List<dynamic>.from(films!.map((x) => x)),
+        "species": List<dynamic>.from(species!.map((x) => x)),
+        "vehicles": List<dynamic>.from(vehicles!.map((x) => x)),
+        "starships": List<dynamic>.from(starships!.map((x) => x)),
+        "created": created != null ? created!.toIso8601String() : "",
+        "edited": edited != null ? edited!.toIso8601String() : "",
         "url": url,
       };
 
-  getInfo() {
-    for (var item in toJson().keys) {}
-  }
-
-  Widget get imageGender {
+  Widget imageGender(String? gender) {
     switch (gender) {
       case "male":
         return ImageAsset(asset: "male");
