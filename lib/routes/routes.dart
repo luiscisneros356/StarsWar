@@ -12,9 +12,9 @@ class RoutesApp {
 
   static Map<String, Widget Function(BuildContext)> getRoutes() {
     return {
-      RoutesApp.home: (context) => HomeScreen(),
+      RoutesApp.home: (context) => const HomeScreen(),
       RoutesApp.details: (context) => const DetailsScreen(),
-      RoutesApp.reportedList: (context) => ReportedList(),
+      RoutesApp.reportedList: (context) => const ReportedList(),
       RoutesApp.splash: (context) => const Splash()
     };
   }

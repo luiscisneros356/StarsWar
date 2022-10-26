@@ -10,20 +10,20 @@ class CustomDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text("Report send successful"),
+      title: const Text("Report send successful"),
       actions: [
         TextButton(
           onPressed: () {
             Navigator.pushNamed(context, RoutesApp.reportedList);
           },
-          child: Text("Review my reports"),
+          child: const Text("Review my reports"),
         ),
         TextButton(
           onPressed: () {
             Navigator.pop(context);
             Navigator.pop(context);
           },
-          child: Text("Go back"),
+          child: const Text("Go back"),
         )
       ],
     );

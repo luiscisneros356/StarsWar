@@ -1,17 +1,16 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:personajes_star_war/models/people.dart';
 import 'package:personajes_star_war/routes/routes.dart';
 import 'package:personajes_star_war/utils/helpers.dart';
-import 'package:personajes_star_war/utils/image_assets.dart';
 
-import 'package:provider/provider.dart';
+import 'package:personajes_star_war/utils/style.dart';
 
-import '../provider/provider.dart';
 import '../utils/hive.dart';
 
 class ReportedList extends StatefulWidget {
+  const ReportedList({Key? key}) : super(key: key);
+
   @override
   State<ReportedList> createState() => _ReportedListState();
 }
@@ -23,7 +22,7 @@ class _ReportedListState extends State<ReportedList> with SingleTickerProviderSt
   late Animation<double> opacity;
   @override
   void initState() {
-    animationController = AnimationController(vsync: this, duration: Duration(seconds: 2));
+    animationController = AnimationController(vsync: this, duration: const Duration(seconds: 2));
     scale = Tween(begin: 0.0, end: 1.0).animate(animationController);
     rotate = Tween(begin: 0.0, end: 2.0 * pi).animate(animationController);
     opacity = Tween(begin: 0.0, end: 1.0).animate(animationController);
@@ -44,21 +43,19 @@ class _ReportedListState extends State<ReportedList> with SingleTickerProviderSt
     return Boxes.listReportedPeople().isNotEmpty
         ? Scaffold(
             appBar: AppBar(
-              title: Text("My Reports"),
+              title: const Text("My Reports"),
               centerTitle: true,
               actions: [
                 TextButton.icon(
                     onPressed: () {},
-                    icon: Icon(Icons.delete_forever_outlined),
-                    label: Text("Delete All"))
+                    icon: const Icon(Icons.delete_forever_outlined),
+                    label: const Text("Delete All"))
               ],
               leading: IconButton(
                   onPressed: () {
-                    Navigator.pop(context);
-                    Navigator.pop(context);
-                    Navigator.pop(context);
+                    Navigator.popAndPushNamed(context, RoutesApp.home);
                   },
-                  icon: Icon(Icons.arrow_back)),
+                  icon: const Icon(Icons.arrow_back)),
             ),
             body: ListView.builder(
               itemCount: Boxes.listReportedPeople().length,
@@ -76,11 +73,11 @@ class _ReportedListState extends State<ReportedList> with SingleTickerProviderSt
                       title: Transform.rotate(angle: rotate.value, child: Text(p.name)),
                       subtitle: AnimatedOpacity(
                           opacity: opacity.value,
-                          duration: Duration(seconds: 2),
+                          duration: const Duration(seconds: 2),
                           child: Text(capitalize("${p.gender}"))),
                       trailing: AnimatedOpacity(
                         opacity: opacity.value,
-                        duration: Duration(seconds: 2),
+                        duration: const Duration(seconds: 2),
                         child: IconButton(
                             onPressed: () {
                               // data.reportedListPeople
@@ -88,7 +85,7 @@ class _ReportedListState extends State<ReportedList> with SingleTickerProviderSt
                               Boxes.deletePeople(index);
                               setState(() {});
                             },
-                            icon: Icon(Icons.delete)),
+                            icon: const Icon(Icons.delete)),
                       ),
                     );
                   },
@@ -102,21 +99,25 @@ class _ReportedListState extends State<ReportedList> with SingleTickerProviderSt
                   Boxes.deleteAllPeople();
                   setState(() {});
                 },
-                icon: Icon(
+                icon: const Icon(
                   Icons.delete_forever_rounded,
                   color: Colors.red,
                 ),
-                label: Text("Delete All")),
+                label: const Text("Delete All")),
           )
         : Scaffold(
             appBar: AppBar(
               leading: IconButton(
-                icon: Icon(Icons.arrow_back),
+                icon: const Icon(Icons.arrow_back),
                 onPressed: () {
                   Navigator.popAndPushNamed(context, RoutesApp.home);
                 },
               ),
             ),
-            body: Center(child: Text("No data")));
+            body: Center(
+                child: Text(
+              "You have not sighting",
+              style: AppTextStyle.menu(color: Colors.blue),
+            )));
   }
 }

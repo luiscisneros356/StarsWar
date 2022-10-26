@@ -86,13 +86,13 @@ class People {
   Widget imageGender(String? gender) {
     switch (gender) {
       case "male":
-        return ImageAsset(asset: "male");
+        return const ImageAsset(asset: "male");
 
       case "female":
-        return ImageAsset(asset: "female");
+        return const ImageAsset(asset: "female");
 
       default:
-        return ImageAsset(asset: "other");
+        return const ImageAsset(asset: "other");
     }
   }
 }

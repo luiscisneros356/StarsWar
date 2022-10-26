@@ -12,7 +12,7 @@ import '../widgets/people_data.dart';
 
 class ProviderData extends ChangeNotifier {
   List<People> listPeople = [];
-  // List<People?> reportedListPeople = [];
+
   List<Widget> datos = [];
   int _page = 0;
   int get page => _page;
@@ -109,11 +109,8 @@ class ProviderData extends ChangeNotifier {
     final resp = await http.post(url, body: body);
 
     if (resp.statusCode == 200 || resp.statusCode == 201) {
-      print("Enviado");
-
       return true;
     } else {
-      print("No funciono");
       return false;
     }
   }

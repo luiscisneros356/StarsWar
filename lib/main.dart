@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
         routes: RoutesApp.getRoutes(),
         // home: MyHomePage(title: 'Flutter Demo Home Page'),
 
-        home: Splash(),
+        home: const Splash(),
       ),
     );
   }

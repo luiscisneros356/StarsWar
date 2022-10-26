@@ -7,7 +7,7 @@ import '../routes/routes.dart';
 import 'card_people.dart';
 
 class ListPeople extends StatefulWidget {
-  ListPeople({
+  const ListPeople({
     Key? key,
   }) : super(key: key);
 

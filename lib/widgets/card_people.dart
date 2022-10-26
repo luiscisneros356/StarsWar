@@ -3,11 +3,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 import 'package:personajes_star_war/utils/style.dart';
-import 'package:provider/provider.dart';
 
 import '../models/people.dart';
-import '../provider/provider.dart';
-import '../routes/routes.dart';
 
 class PeopleCard extends StatelessWidget {
   const PeopleCard({
@@ -20,13 +17,13 @@ class PeopleCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(8),
-      margin: EdgeInsets.all(12),
+      padding: const EdgeInsets.all(8),
+      margin: const EdgeInsets.all(12),
       width: double.infinity,
       height: 260,
       decoration: BoxDecoration(
           color: Colors.primaries[Random().nextInt(Colors.primaries.length)],
-          borderRadius: BorderRadius.all(
+          borderRadius: const BorderRadius.all(
             Radius.circular(20),
           ),
           border: Border.all(
@@ -37,7 +34,7 @@ class PeopleCard extends StatelessWidget {
             alignment: Alignment.center,
             children: [
               ClipRRect(
-                  borderRadius: BorderRadius.all(Radius.circular(100)),
+                  borderRadius: const BorderRadius.all(Radius.circular(100)),
                   child: people.imageGender(people.gender)),
               Positioned(
                   top: 10,
@@ -48,14 +45,14 @@ class PeopleCard extends StatelessWidget {
                       width: 45,
                       decoration: BoxDecoration(
                           color: Colors.primaries[Random().nextInt(Colors.primaries.length)],
-                          borderRadius: BorderRadius.all(Radius.circular(100))),
+                          borderRadius: const BorderRadius.all(Radius.circular(100))),
                       child: Text(
                         people.gender != null ? people.gender!.toUpperCase() : "",
                         style: AppTextStyle.subTitle(),
                       ))),
             ],
           ),
-          SizedBox(height: 12),
+          const SizedBox(height: 12),
           Text(
             "Name:",
             style: AppTextStyle.menu(),

@@ -8,16 +8,17 @@ import 'package:personajes_star_war/utils/style.dart';
 import 'package:provider/provider.dart';
 
 import '../provider/provider.dart';
+import '../widgets/fab.dart';
 import '../widgets/list_people.dart';
 
 class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key}) : super(key: key);
+
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  //const HomeScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<ProviderData>(context, listen: false);
@@ -25,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return SafeArea(
       child: RefreshIndicator(
         onRefresh: () {
-          return Future.delayed(Duration(milliseconds: 1000)).then((value) {
+          return Future.delayed(const Duration(milliseconds: 1000)).then((value) {
             provider.clearListPeople();
             provider.infiniteScroll();
           });
@@ -37,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
             backgroundColor: Colors.transparent,
             elevation: 0,
             toolbarHeight: 140,
-            flexibleSpace: Opacity(
+            flexibleSpace: const Opacity(
               opacity: 0.5,
               child: ImageAsset(
                 asset: "logo",
@@ -49,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
               builder: (context, AsyncSnapshot<List<People>> snapshot) {
                 if (snapshot.hasData && snapshot.connectionState == ConnectionState.done) {
                   if (snapshot.data != null) {
-                    return ListPeople();
+                    return const ListPeople();
                   }
                 } else if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(
@@ -68,31 +69,41 @@ class _HomeScreenState extends State<HomeScreen> {
                 }
                 return Container();
               }),
-          floatingActionButton: Row(
-            children: [
-              FloatingActionButton(
-                  heroTag: "1",
+          floatingActionButton: RotatedBox(
+            quarterTurns: 4,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Fab(
+                    name: "My\nReports",
+                    onPressed: () {
+                      Navigator.pushNamed(context, "/reportedList");
+                    },
+                    tag: "3",
+                    icon: Icons.report),
+                const SizedBox(height: 24),
+                Fab(
+                  name: "Primera\npagina",
                   onPressed: () {
                     provider.clearListPeople();
                     provider.setPage(0);
                     setState(() {});
                   },
-                  child: Icon(Icons.add)),
-              FloatingActionButton(
-                heroTag: "2",
-                onPressed: () {
-                  provider.infiniteScroll();
-                },
-                child: Icon(Icons.abc),
-              ),
-              FloatingActionButton(
-                heroTag: "3",
-                onPressed: () {
-                  Navigator.pushNamed(context, "/reportedList");
-                },
-                child: Icon(Icons.reset_tv),
-              ),
-            ],
+                  tag: "4",
+                  icon: Icons.first_page,
+                ),
+                const SizedBox(height: 24),
+                Fab(
+                  name: "Cargar\nmás",
+                  onPressed: () {
+                    provider.infiniteScroll();
+                  },
+                  tag: "2",
+                  icon: Icons.refresh,
+                )
+              ],
+            ),
           ),
         ),
       ),

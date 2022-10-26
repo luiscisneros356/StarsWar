@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:personajes_star_war/routes/routes.dart';
 import 'package:personajes_star_war/utils/hive.dart';
 import 'package:personajes_star_war/utils/style.dart';
 import 'package:personajes_star_war/widgets/card_people.dart';
@@ -10,7 +9,7 @@ import '../provider/provider.dart';
 import '../utils/dialog.dart';
 
 class DetailsScreen extends StatefulWidget {
-  const DetailsScreen();
+  const DetailsScreen({Key? key}) : super(key: key);
 
   @override
   State<DetailsScreen> createState() => _DetailsScreenState();
@@ -23,7 +22,7 @@ class _DetailsScreenState extends State<DetailsScreen> with SingleTickerProvider
 
   @override
   void initState() {
-    animationController = AnimationController(vsync: this, duration: Duration(seconds: 3));
+    animationController = AnimationController(vsync: this, duration: const Duration(seconds: 3));
     scale = Tween(begin: 0.0, end: 1.0).animate(animationController);
 
     animationController.repeat();
@@ -60,7 +59,7 @@ class _DetailsScreenState extends State<DetailsScreen> with SingleTickerProvider
                 ),
               ),
               Card(
-                margin: EdgeInsets.all(12),
+                margin: const EdgeInsets.all(12),
                 color: Colors.green.withOpacity(0.5),
                 child: Column(
                   children: [...data.datos],
@@ -87,18 +86,18 @@ class _DetailsScreenState extends State<DetailsScreen> with SingleTickerProvider
                         animationController.stop();
                         if (value) {
                           Boxes.addPeople(data.people);
-                          Future.delayed(Duration(seconds: 2)).then((value) =>
-                              showDialog(context: context, builder: (context) => CustomDialog()));
+                          Future.delayed(const Duration(seconds: 2)).then((value) => showDialog(
+                              context: context, builder: (context) => const CustomDialog()));
                         } else {
                           showDialog(
                               context: context,
-                              builder: (context) => AlertDialog(
-                                    title: Text("Tenemos problemas"),
+                              builder: (context) => const AlertDialog(
+                                    title: Text("Houston we have a problem"),
                                   ));
                         }
                       });
                     },
-                    child: Icon(Icons.add),
+                    child: const Icon(Icons.add),
                   ),
                 );
               },
