@@ -98,9 +98,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           },
                     tag: "3",
                     icon: Icons.report),
-                const SizedBox(height: 24),
+                const SizedBox(height: 44),
                 Fab(
-                  name: "Primera\npagina",
+                  name: "First\npage",
                   onPressed: provider.isConected
                       ? () {
                           provider.setPage(0);
@@ -112,9 +112,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   tag: "4",
                   icon: Icons.first_page,
                 ),
-                const SizedBox(height: 24),
+                const SizedBox(height: 44),
                 Fab(
-                  name: "Cargar\nmás",
+                  name: "Load\nmore\npeople",
                   onPressed: provider.isConected
                       ? () {
                           provider.infiniteScroll();
