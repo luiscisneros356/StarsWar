@@ -16,6 +16,12 @@ class ProviderData extends ChangeNotifier {
   List<Widget> datos = [];
   int _page = 0;
   int get page => _page;
+  bool _isConected = false;
+  bool get isConected => _isConected;
+  void setIsConected(bool val) {
+    _isConected = val;
+    notifyListeners();
+  }
 
   People? _people;
   People? get people => _people;
@@ -31,15 +37,8 @@ class ProviderData extends ChangeNotifier {
     notifyListeners();
   }
 
-  bool _eneableConection = false;
-  bool get eneableConection => _eneableConection;
   People? _peopleReported;
   People? get peopleReported => _peopleReported;
-
-  void setConection(bool val) {
-    _eneableConection = val;
-    notifyListeners();
-  }
 
   void setPeopleReported(People? people) {
     _peopleReported = people;
@@ -86,7 +85,6 @@ class ProviderData extends ChangeNotifier {
     final resp = await http.get(url);
 
     if (resp.statusCode == 200) {
-      // print(resp.body);
       listPeople.addAll(PaginatedResult.fromJson(json.decode(utf8.decode(resp.bodyBytes))).results);
 
       return PaginatedResult.fromJson(jsonDecode(utf8.decode(resp.bodyBytes))).results;

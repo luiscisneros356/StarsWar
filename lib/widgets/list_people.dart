@@ -25,7 +25,6 @@ class _ListPeopleState extends State<ListPeople> {
     _scrollController.addListener(() {
       if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
         Provider.of<ProviderData>(context, listen: false).infiniteScroll();
-        // print(Provider.of<ProviderData>(context, listen: false).listPeople.last.name);
       }
     });
     super.initState();

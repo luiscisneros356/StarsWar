@@ -12,7 +12,7 @@ class Fab extends StatelessWidget {
       : super(key: key);
 
   final String name;
-  final void Function() onPressed;
+  final void Function()? onPressed;
   final String tag;
   final IconData icon;
   @override

@@ -29,3 +29,27 @@ class CustomDialog extends StatelessWidget {
     );
   }
 }
+
+class NoConectionDialog extends StatelessWidget {
+  const NoConectionDialog({
+    this.onPressed,
+    Key? key,
+  }) : super(key: key);
+
+  final void Function()? onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: const Text("You have not internet conection"),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.pop(context, true);
+          },
+          child: const Text("Active conection"),
+        )
+      ],
+    );
+  }
+}

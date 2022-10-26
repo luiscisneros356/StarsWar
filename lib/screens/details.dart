@@ -86,7 +86,7 @@ class _DetailsScreenState extends State<DetailsScreen> with SingleTickerProvider
                         animationController.stop();
                         if (value) {
                           Boxes.addPeople(data.people);
-                          Future.delayed(const Duration(seconds: 2)).then((value) => showDialog(
+                          Future.delayed(const Duration(seconds: 1)).then((value) => showDialog(
                               context: context, builder: (context) => const CustomDialog()));
                         } else {
                           showDialog(

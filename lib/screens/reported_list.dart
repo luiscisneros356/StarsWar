@@ -80,8 +80,6 @@ class _ReportedListState extends State<ReportedList> with SingleTickerProviderSt
                         duration: const Duration(seconds: 2),
                         child: IconButton(
                             onPressed: () {
-                              // data.reportedListPeople
-                              //     .removeWhere((element) => element?.edited == p.edited);
                               Boxes.deletePeople(index);
                               setState(() {});
                             },
@@ -95,7 +93,6 @@ class _ReportedListState extends State<ReportedList> with SingleTickerProviderSt
             floatingActionButton: TextButton.icon(
                 style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.yellow)),
                 onPressed: () {
-                  //data.reportedListPeople.clear();
                   Boxes.deleteAllPeople();
                   setState(() {});
                 },
