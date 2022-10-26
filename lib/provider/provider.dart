@@ -16,7 +16,7 @@ class ProviderData extends ChangeNotifier {
   List<Widget> datos = [];
   int _page = 0;
   int get page => _page;
-  bool _isConected = false;
+  bool _isConected = true;
   bool get isConected => _isConected;
   void setIsConected(bool val) {
     _isConected = val;
