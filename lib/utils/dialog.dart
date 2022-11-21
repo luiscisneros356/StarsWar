@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:personajes_star_war/screens/reported_list.dart';
 
 import '../routes/routes.dart';
 
@@ -14,7 +15,7 @@ class CustomDialog extends StatelessWidget {
       actions: [
         TextButton(
           onPressed: () {
-            Navigator.pushNamed(context, RoutesApp.reportedList);
+            Navigator.push(context, RoutesApp.routeTransition(const ReportedList()));
           },
           child: const Text("Review my reports"),
         ),

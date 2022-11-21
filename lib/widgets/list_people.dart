@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:personajes_star_war/screens/details.dart';
 
 import 'package:provider/provider.dart';
 
@@ -55,6 +56,7 @@ class _ListPeopleState extends State<ListPeople> with SingleTickerProviderStateM
               builder: (BuildContext context, Widget? child) {
                 return PageView.builder(
                     controller: _controller,
+                    physics: const NeverScrollableScrollPhysics(),
                     itemCount: prov.listPeople.length,
                     itemBuilder: ((context, i) {
                       final people = prov.listPeople[i];
@@ -64,7 +66,7 @@ class _ListPeopleState extends State<ListPeople> with SingleTickerProviderStateM
 
                       return GestureDetector(
                         onTap: (() {
-                          Navigator.pushNamed(context, RoutesApp.details);
+                          Navigator.push(context, RoutesApp.routeTransition(const DetailsScreen()));
                           prov.setPeople(people);
                           prov.setIsBackFromDetail(true);
                         }),

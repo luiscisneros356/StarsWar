@@ -1,10 +1,13 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:personajes_star_war/provider/provider.dart';
 
 import 'package:personajes_star_war/routes/routes.dart';
 import 'package:personajes_star_war/screens/home.dart';
+import 'package:personajes_star_war/utils/hive.dart';
 import 'package:personajes_star_war/utils/image_assets.dart';
+import 'package:provider/provider.dart';
 
 class Splash extends StatefulWidget {
   const Splash({Key? key}) : super(key: key);
@@ -24,6 +27,9 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      Provider.of<ProviderData>(context, listen: false).setInitPage(true);
+    });
     animationController = AnimationController(vsync: this, duration: const Duration(seconds: 3));
     rotate = Tween(begin: 0.0, end: 2.0 * pi).animate(animationController);
     opacity = Tween(begin: 0.0, end: 1.0).animate(animationController);
@@ -34,24 +40,10 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
     animationController.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         Future.delayed(const Duration(seconds: 2)).then((value) {
-          Navigator.push(context, route());
+          Navigator.push(context, RoutesApp.routeTransition(HomeScreen()));
         });
       }
     });
-  }
-
-  Route route() {
-    return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) => HomeScreen(),
-      transitionDuration: const Duration(seconds: 5),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        return ScaleTransition(
-          scale: Tween(begin: 0.0, end: 1.0).animate(animation),
-          alignment: Alignment.center,
-          child: child,
-        );
-      },
-    );
   }
 
   @override

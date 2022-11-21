@@ -4,21 +4,27 @@ import 'package:flutter/material.dart';
 
 import 'package:personajes_star_war/models/people.dart';
 import 'package:personajes_star_war/service/services.dart';
+import 'package:personajes_star_war/utils/hive.dart';
 
 import '../widgets/people_data.dart';
 
 class ProviderData extends ChangeNotifier {
   List<People> listPeople = [];
-
   List<Widget> datos = [];
   int _page = 0;
   int get page => _page;
+
+  bool _isInitPage = false;
+  bool get isInitPage => _isInitPage;
+  void setInitPage(bool v) {
+    _isInitPage = v;
+    notifyListeners();
+  }
 
   bool _isNextPage = false;
   bool get isNextPage => _isNextPage;
   void setIsNextPage(bool v) {
     _isNextPage = v;
-
     notifyListeners();
   }
 
@@ -46,16 +52,6 @@ class ProviderData extends ChangeNotifier {
   People? _people;
   People? get people => _people;
   Map peopleData = {};
-
-  void setPage(int val) {
-    _page = val;
-    notifyListeners();
-  }
-
-  clearListPeople() {
-    listPeople.clear();
-    notifyListeners();
-  }
 
   People? _peopleReported;
   People? get peopleReported => _peopleReported;
@@ -85,32 +81,28 @@ class ProviderData extends ChangeNotifier {
     "vehicles"
   ];
   int indexPage() {
-    // print("backFromDetail $backFromDetail");
-    // print("backFromReport $backFromReport");
-
-    if (backFromDetail || backFromReport) {
-      return _page;
+    if (_isInitPage) {
+      return Boxes.getPage();
     } else {
-      return paginated();
+      if (backFromDetail || backFromReport) {
+        return _page;
+      } else {
+        return paginated();
+      }
     }
   }
 
   int paginated() {
+    _page = Boxes.getPage();
+
     if (isNextPage) {
-      if (_page == 9 || _page == 0) {
-        _page = 0;
-      }
+      if (_page >= 9 || _page <= 0) _page = 0;
       _page++;
     } else {
-      if (_page == 0) {
-        return _page = 1;
-      }
-
       _page--;
-      if (_page == 0) {
-        return _page = 1;
-      }
+      if (_page <= 0) _page = 1;
     }
+    Boxes.putPage(_page);
 
     return _page;
   }

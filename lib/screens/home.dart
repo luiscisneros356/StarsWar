@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:personajes_star_war/models/people.dart';
-import 'package:personajes_star_war/utils/dialog.dart';
 
 import 'package:personajes_star_war/utils/image_assets.dart';
 import 'package:personajes_star_war/utils/style.dart';
@@ -52,13 +51,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     Container(
                       height: 50,
                       width: 50,
-                      child: CircularProgressIndicator(
+                      child: const CircularProgressIndicator(
                         strokeWidth: 10,
                       ),
                     ),
                     const SizedBox(height: 50),
                     Text(
-                      "Cargando personajes",
+                      "Loading people",
                       style: AppTextStyle.title(color: Colors.black),
                     )
                   ],
@@ -74,6 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
             Fab(
               name: "Back\nPage",
               onPressed: () {
+                provider.setInitPage(false);
                 provider.setIsBackFromDetail(false);
                 provider.setIsBackFromReport(false);
                 provider.setIsNextPage(false);
@@ -86,6 +86,8 @@ class _HomeScreenState extends State<HomeScreen> {
             Fab(
               name: "Next\npage",
               onPressed: () {
+                provider.setInitPage(false);
+
                 provider.setIsBackFromDetail(false);
                 provider.setIsBackFromReport(false);
                 provider.setIsNextPage(true);

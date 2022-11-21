@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:personajes_star_war/provider/provider.dart';
 import 'package:personajes_star_war/routes/routes.dart';
+import 'package:personajes_star_war/screens/home.dart';
 import 'package:personajes_star_war/utils/helpers.dart';
 
 import 'package:personajes_star_war/utils/style.dart';
@@ -51,7 +52,7 @@ class _ReportedListState extends State<ReportedList> with SingleTickerProviderSt
               leading: IconButton(
                   onPressed: () {
                     prov.setIsBackFromReport(true);
-                    Navigator.popAndPushNamed(context, RoutesApp.home);
+                    Navigator.push(context, RoutesApp.routeTransition(const HomeScreen()));
                   },
                   icon: const Icon(Icons.arrow_back)),
             ),
