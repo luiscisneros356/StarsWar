@@ -1,5 +1,3 @@
-import 'dart:developer' as dev;
-
 import 'package:flutter/material.dart';
 
 import 'package:personajes_star_war/models/people.dart';
@@ -42,9 +40,12 @@ class ProviderData extends ChangeNotifier {
     notifyListeners();
   }
 
-  bool _isConected = true;
+  bool _isConected = Boxes.hasConnection();
   bool get isConected => _isConected;
+
   void setIsConected(bool val) {
+    final boolAsInt = val ? 1 : 0;
+    Boxes.putConnection(boolAsInt);
     _isConected = val;
     notifyListeners();
   }

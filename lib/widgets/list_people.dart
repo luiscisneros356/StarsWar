@@ -28,14 +28,15 @@ class _ListPeopleState extends State<ListPeople> with SingleTickerProviderStateM
   @override
   void initState() {
     _controller = PageController();
-    _animationController = AnimationController(vsync: this, duration: Duration(seconds: 1));
+    _duration = const Duration(seconds: 1);
+    _animationController = AnimationController(vsync: this, duration: _duration);
 
     _opacity = Tween(begin: 0.0, end: 1.0).animate(_animationController);
     _controller.addListener(() {
       _currentPage = _controller.page ?? 0.0;
       setState(() {});
     });
-    _duration = const Duration(seconds: 1);
+
     _curves = Curves.easeInOut;
 
     super.initState();

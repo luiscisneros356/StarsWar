@@ -5,7 +5,7 @@ import 'package:personajes_star_war/provider/provider.dart';
 
 import 'package:personajes_star_war/routes/routes.dart';
 import 'package:personajes_star_war/screens/home.dart';
-import 'package:personajes_star_war/utils/hive.dart';
+
 import 'package:personajes_star_war/utils/image_assets.dart';
 import 'package:provider/provider.dart';
 
@@ -40,7 +40,7 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
     animationController.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         Future.delayed(const Duration(seconds: 2)).then((value) {
-          Navigator.push(context, RoutesApp.routeTransition(HomeScreen()));
+          Navigator.push(context, RoutesApp.routeTransition(const HomeScreen()));
         });
       }
     });

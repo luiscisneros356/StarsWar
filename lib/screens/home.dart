@@ -32,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
           backgroundColor: Colors.transparent,
           elevation: 0,
           toolbarHeight: 140,
-          flexibleSpace: ImageAsset(
+          flexibleSpace: const ImageAsset(
             asset: "logo",
           ),
         ),
@@ -48,10 +48,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Container(
+                    const SizedBox(
                       height: 50,
                       width: 50,
-                      child: const CircularProgressIndicator(
+                      child: CircularProgressIndicator(
                         strokeWidth: 10,
                       ),
                     ),

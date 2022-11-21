@@ -20,8 +20,7 @@ class ConectionsService {
 
       final List<People> peopleEmpty = [];
       return peopleEmpty;
-    } catch (e, s) {
-      print("$s");
+    } catch (e) {
       throw Exception(e.toString());
     }
   }

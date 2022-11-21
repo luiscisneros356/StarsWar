@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:personajes_star_war/service/services.dart';
 
 import 'package:personajes_star_war/utils/hive.dart';
 import 'package:personajes_star_war/utils/style.dart';
@@ -24,10 +23,8 @@ class _DetailsScreenState extends State<DetailsScreen> with SingleTickerProvider
   @override
   void initState() {
     animationController = AnimationController(vsync: this, duration: const Duration(seconds: 3));
-    scale = Tween(begin: 0.0, end: 1.0).animate(animationController);
-
-    animationController.repeat();
-
+    scale = Tween(begin: 0.5, end: 1.0).animate(animationController);
+    Boxes.hasConnection() ? animationController.repeat() : animationController.stop();
     super.initState();
   }
 
@@ -49,18 +46,21 @@ class _DetailsScreenState extends State<DetailsScreen> with SingleTickerProvider
           backgroundColor:
               data.isConected ? Colors.yellow.withOpacity(0.4) : Colors.red.withOpacity(0.4),
           width: 100,
-          child: Container(
+          child: SizedBox(
             height: 100,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(!data.isConected ? "Eneable connection to report" : "",
+                Text(!Boxes.hasConnection() ? "Eneable connection to report" : "",
                     style: AppTextStyle.title(), textAlign: TextAlign.center),
                 const SizedBox(height: 58),
                 Switch(
-                    value: data.isConected,
+                    value: Boxes.hasConnection(),
                     onChanged: (b) {
                       data.setIsConected(!data.isConected);
+                      !Boxes.hasConnection()
+                          ? animationController.stop()
+                          : animationController.repeat();
 
                       setState(() {});
                     }),
@@ -101,29 +101,38 @@ class _DetailsScreenState extends State<DetailsScreen> with SingleTickerProvider
         floatingActionButton: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            FloatingActionButton(
-              backgroundColor: Colors.red,
-              splashColor: Colors.blue,
-              onPressed: data.isConected
-                  ? () {
-                      data.setPeopleReported(people);
-                      data.sendResult(people).then((value) {
-                        animationController.stop();
-                        if (value) {
-                          Boxes.addPeople(data.people);
-                          Future.delayed(const Duration(seconds: 1)).then((value) => showDialog(
-                              context: context, builder: (context) => const CustomDialog()));
-                        } else {
-                          showDialog(
-                              context: context,
-                              builder: (context) => const AlertDialog(
-                                    title: Text("Houston we have a problem"),
-                                  ));
-                        }
-                      });
-                    }
-                  : null,
-              child: const Icon(Icons.add),
+            AnimatedBuilder(
+              animation: animationController,
+              builder: (BuildContext context, Widget? child) {
+                return Transform.scale(
+                  scale: scale.value,
+                  child: FloatingActionButton(
+                      backgroundColor: Colors.red,
+                      splashColor: Colors.blue,
+                      onPressed: Boxes.hasConnection()
+                          ? () {
+                              data.setPeopleReported(people);
+                              data.sendResult(people).then((value) {
+                                animationController.stop();
+                                if (value) {
+                                  Boxes.addPeople(data.people);
+                                  Future.delayed(const Duration(seconds: 1)).then((value) =>
+                                      showDialog(
+                                          context: context,
+                                          builder: (context) => const CustomDialog()));
+                                } else {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) => const AlertDialog(
+                                            title: Text("Houston we have a problem"),
+                                          ));
+                                }
+                              });
+                            }
+                          : null,
+                      child: const Icon(Icons.add)),
+                );
+              },
             ),
             Text(
               "Report sighting",
