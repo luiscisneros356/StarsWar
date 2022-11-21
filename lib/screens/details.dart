@@ -46,7 +46,8 @@ class _DetailsScreenState extends State<DetailsScreen> with SingleTickerProvider
       data.getInfo(people);
       return Scaffold(
         endDrawer: Drawer(
-          backgroundColor: Colors.red.withOpacity(0.4),
+          backgroundColor:
+              data.isConected ? Colors.yellow.withOpacity(0.4) : Colors.red.withOpacity(0.4),
           width: 100,
           child: Container(
             height: 100,

@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 
 import 'package:personajes_star_war/utils/style.dart';
@@ -42,12 +40,12 @@ class PeopleCard extends StatelessWidget {
                       alignment: Alignment.center,
                       height: 45,
                       width: 45,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                           color: Colors.amber,
-                          borderRadius: const BorderRadius.all(Radius.circular(100))),
+                          borderRadius: BorderRadius.all(Radius.circular(100))),
                       child: Text(
                         people.gender != null ? people.gender!.toUpperCase() : "",
-                        style: AppTextStyle.subTitle(),
+                        style: AppTextStyle.subTitle(color: Colors.black),
                       ))),
             ],
           ),

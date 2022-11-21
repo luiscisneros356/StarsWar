@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 import 'package:personajes_star_war/routes/routes.dart';
+import 'package:personajes_star_war/screens/home.dart';
 import 'package:personajes_star_war/utils/image_assets.dart';
 
 class Splash extends StatefulWidget {
@@ -33,10 +34,24 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
     animationController.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         Future.delayed(const Duration(seconds: 2)).then((value) {
-          Navigator.pushReplacementNamed(context, RoutesApp.home);
+          Navigator.push(context, route());
         });
       }
     });
+  }
+
+  Route route() {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => HomeScreen(),
+      transitionDuration: const Duration(seconds: 5),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        return ScaleTransition(
+          scale: Tween(begin: 0.0, end: 1.0).animate(animation),
+          alignment: Alignment.center,
+          child: child,
+        );
+      },
+    );
   }
 
   @override

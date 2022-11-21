@@ -49,9 +49,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const CircularProgressIndicator(
-                      strokeWidth: 10,
+                    Container(
+                      height: 50,
+                      width: 50,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 10,
+                      ),
                     ),
+                    const SizedBox(height: 50),
                     Text(
                       "Cargando personajes",
                       style: AppTextStyle.title(color: Colors.black),

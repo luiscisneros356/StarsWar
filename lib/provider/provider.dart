@@ -111,7 +111,7 @@ class ProviderData extends ChangeNotifier {
         return _page = 1;
       }
     }
-    ;
+
     return _page;
   }
 
