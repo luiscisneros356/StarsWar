@@ -1,12 +1,9 @@
-import 'dart:convert';
 import 'dart:developer' as dev;
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-import 'package:http/http.dart' as http;
-import 'package:personajes_star_war/models/paginated_result.dart';
 import 'package:personajes_star_war/models/people.dart';
+import 'package:personajes_star_war/service/services.dart';
 
 import '../widgets/people_data.dart';
 
@@ -16,6 +13,29 @@ class ProviderData extends ChangeNotifier {
   List<Widget> datos = [];
   int _page = 0;
   int get page => _page;
+
+  bool _isNextPage = false;
+  bool get isNextPage => _isNextPage;
+  void setIsNextPage(bool v) {
+    _isNextPage = v;
+
+    notifyListeners();
+  }
+
+  bool _backFromDetail = false;
+  bool get backFromDetail => _backFromDetail;
+  void setIsBackFromDetail(bool v) {
+    _backFromDetail = v;
+    notifyListeners();
+  }
+
+  bool _backFromReport = false;
+  bool get backFromReport => _backFromReport;
+  void setIsBackFromReport(bool v) {
+    _backFromReport = v;
+    notifyListeners();
+  }
+
   bool _isConected = true;
   bool get isConected => _isConected;
   void setIsConected(bool val) {
@@ -64,53 +84,45 @@ class ProviderData extends ChangeNotifier {
     "starships",
     "vehicles"
   ];
+  int indexPage() {
+    // print("backFromDetail $backFromDetail");
+    // print("backFromReport $backFromReport");
 
-  Future<void> infiniteScroll() async {
-    List<People> morePeople = await getResults();
-
-    listPeople.addAll(morePeople);
-
-    notifyListeners();
-  }
-
-  Future<List<People>> getResults() async {
-    _page++;
-
-    if (_page == 9) {
-      listPeople.clear();
-      _page = 1;
-    }
-
-    final url = Uri.parse("https://swapi.dev/api/people/?page=$page");
-    final resp = await http.get(url);
-
-    if (resp.statusCode == 200) {
-      listPeople.addAll(PaginatedResult.fromJson(json.decode(utf8.decode(resp.bodyBytes))).results);
-
-      return PaginatedResult.fromJson(jsonDecode(utf8.decode(resp.bodyBytes))).results;
-    }
-
-    final List<People> peopleEmpty = [];
-    return peopleEmpty;
-  }
-
-  Future<bool> sendResult() async {
-    final url = Uri.parse("https://jsonplaceholder.typicode.com/posts");
-    final int userId = Random().nextInt(50);
-
-    Map<String, dynamic> body = {
-      "userId": "$userId",
-      "dateTime": peopleReported?.created.toString(),
-      "character_name": peopleReported?.name
-    };
-
-    final resp = await http.post(url, body: body);
-
-    if (resp.statusCode == 200 || resp.statusCode == 201) {
-      return true;
+    if (backFromDetail || backFromReport) {
+      return _page;
     } else {
-      return false;
+      return paginated();
     }
+  }
+
+  int paginated() {
+    if (isNextPage) {
+      if (_page == 9 || _page == 0) {
+        _page = 0;
+      }
+      _page++;
+    } else {
+      if (_page == 0) {
+        return _page = 1;
+      }
+
+      _page--;
+      if (_page == 0) {
+        return _page = 1;
+      }
+    }
+    ;
+    return _page;
+  }
+
+  Future<List<People>> getPeople() async {
+    int index = indexPage();
+
+    return listPeople = await ConectionsService.getResults(index);
+  }
+
+  Future<bool> sendResult(People p) async {
+    return await ConectionsService.sendResult(p);
   }
 
   getInfo(People people) {
@@ -124,7 +136,7 @@ class ProviderData extends ChangeNotifier {
         peopleData.addAll(tempMap);
       }
     });
-    dev.log(peopleData.toString());
+    //  dev.log(peopleData.toString());
 
     int emojiIndex = 0;
     peopleData.forEach((key, value) {

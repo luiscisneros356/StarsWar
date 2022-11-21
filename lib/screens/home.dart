@@ -26,117 +26,79 @@ class _HomeScreenState extends State<HomeScreen> {
     final provider = Provider.of<ProviderData>(context, listen: false);
 
     return SafeArea(
-      child: RefreshIndicator(
-        onRefresh: () {
-          return Future.delayed(const Duration(milliseconds: 1000)).then((value) {
-            provider.clearListPeople();
-            provider.infiniteScroll();
-          });
-        },
-        child: Scaffold(
-          extendBodyBehindAppBar: true,
-          appBar: AppBar(
-            leading: Container(),
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            toolbarHeight: 140,
-            flexibleSpace: const Opacity(
-              opacity: 0.5,
-              child: ImageAsset(
-                asset: "logo",
-              ),
-            ),
+      child: Scaffold(
+        extendBodyBehindAppBar: true,
+        appBar: AppBar(
+          leading: Container(),
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          toolbarHeight: 140,
+          flexibleSpace: ImageAsset(
+            asset: "logo",
           ),
-          body: FutureBuilder(
-              future: provider.getResults(),
-              builder: (context, AsyncSnapshot<List<People>> snapshot) {
-                if (provider.isConected) {
-                  if (snapshot.hasData && snapshot.connectionState == ConnectionState.done) {
-                    if (snapshot.data != null) {
-                      return const ListPeople();
-                    }
-                  } else if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(
-                        child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const CircularProgressIndicator(
-                          strokeWidth: 10,
-                        ),
-                        Text(
-                          "Cargando personajes",
-                          style: AppTextStyle.title(color: Colors.black),
-                        )
-                      ],
-                    ));
-                  }
+        ),
+        body: FutureBuilder(
+            future: provider.getPeople(),
+            builder: (context, AsyncSnapshot<List<People>> snapshot) {
+              if (snapshot.hasData && snapshot.connectionState == ConnectionState.done) {
+                if (snapshot.data != null) {
+                  return const ListPeople();
                 }
+              } else if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(
+                    child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const CircularProgressIndicator(
+                      strokeWidth: 10,
+                    ),
+                    Text(
+                      "Cargando personajes",
+                      style: AppTextStyle.title(color: Colors.black),
+                    )
+                  ],
+                ));
+              }
 
-                return const NoConection();
-              }),
-          floatingActionButton: RotatedBox(
-            quarterTurns: 4,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Expanded(
-                    child: Switch(
-                        value: provider.isConected,
-                        onChanged: (b) {
-                          provider.setIsConected(!provider.isConected);
-                          setState(() {});
-                        })),
-                Fab(
-                    name: "My\nReports",
-                    onPressed: provider.isConected
-                        ? () {
-                            Navigator.pushNamed(context, "/reportedList");
-                          }
-                        : () async {
-                            conected();
-                          },
-                    tag: "3",
-                    icon: Icons.report),
-                const SizedBox(height: 44),
-                Fab(
-                  name: "First\npage",
-                  onPressed: provider.isConected
-                      ? () {
-                          provider.setPage(0);
-                          setState(() {});
-                        }
-                      : () async {
-                          conected();
-                        },
-                  tag: "4",
-                  icon: Icons.first_page,
-                ),
-                const SizedBox(height: 44),
-                Fab(
-                  name: "Load\nmore\npeople",
-                  onPressed: provider.isConected
-                      ? () {
-                          provider.infiniteScroll();
-                        }
-                      : () async {
-                          conected();
-                        },
-                  tag: "2",
-                  icon: Icons.refresh,
-                )
-              ],
+              return const NoConection();
+            }),
+        floatingActionButton: Row(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Fab(
+              name: "Back\nPage",
+              onPressed: () {
+                provider.setIsBackFromDetail(false);
+                provider.setIsBackFromReport(false);
+                provider.setIsNextPage(false);
+
+                setState(() {});
+              },
+              tag: "2",
+              icon: Icons.arrow_back_ios,
             ),
-          ),
+            Fab(
+              name: "Next\npage",
+              onPressed: () {
+                provider.setIsBackFromDetail(false);
+                provider.setIsBackFromReport(false);
+                provider.setIsNextPage(true);
+                setState(() {});
+              },
+              tag: "4",
+              icon: Icons.arrow_forward_ios,
+            ),
+          ],
         ),
       ),
     );
   }
 
-  Future<void> conected() async {
-    final conected =
-        await showDialog(context: context, builder: (context) => const NoConectionDialog());
-    Provider.of<ProviderData>(context, listen: false).setIsConected(conected);
-    setState(() {});
-  }
+  // Future<void> conected() async {
+  //   final conected =
+  //       await showDialog(context: context, builder: (context) => const NoConectionDialog());
+  //   Provider.of<ProviderData>(context, listen: false).setIsConected(conected);
+  //   setState(() {});
+  // }
 }

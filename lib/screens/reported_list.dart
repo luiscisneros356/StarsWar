@@ -1,10 +1,12 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:personajes_star_war/provider/provider.dart';
 import 'package:personajes_star_war/routes/routes.dart';
 import 'package:personajes_star_war/utils/helpers.dart';
 
 import 'package:personajes_star_war/utils/style.dart';
+import 'package:provider/provider.dart';
 
 import '../utils/hive.dart';
 
@@ -40,19 +42,15 @@ class _ReportedListState extends State<ReportedList> with SingleTickerProviderSt
 
   @override
   Widget build(BuildContext context) {
+    final prov = Provider.of<ProviderData>(context);
     return Boxes.listReportedPeople().isNotEmpty
         ? Scaffold(
             appBar: AppBar(
               title: const Text("My Reports"),
               centerTitle: true,
-              actions: [
-                TextButton.icon(
-                    onPressed: () {},
-                    icon: const Icon(Icons.delete_forever_outlined),
-                    label: const Text("Delete All"))
-              ],
               leading: IconButton(
                   onPressed: () {
+                    prov.setIsBackFromReport(true);
                     Navigator.popAndPushNamed(context, RoutesApp.home);
                   },
                   icon: const Icon(Icons.arrow_back)),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:personajes_star_war/service/services.dart';
 
 import 'package:personajes_star_war/utils/hive.dart';
 import 'package:personajes_star_war/utils/style.dart';
@@ -44,6 +45,33 @@ class _DetailsScreenState extends State<DetailsScreen> with SingleTickerProvider
     if (people != null) {
       data.getInfo(people);
       return Scaffold(
+        endDrawer: Drawer(
+          backgroundColor: Colors.red.withOpacity(0.4),
+          width: 100,
+          child: Container(
+            height: 100,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(!data.isConected ? "Eneable connection to report" : "",
+                    style: AppTextStyle.title(), textAlign: TextAlign.center),
+                const SizedBox(height: 58),
+                Switch(
+                    value: data.isConected,
+                    onChanged: (b) {
+                      data.setIsConected(!data.isConected);
+
+                      setState(() {});
+                    }),
+                Text(
+                  data.isConected ? "Connection enable" : "Connection disable",
+                  style: AppTextStyle.title(),
+                  textAlign: TextAlign.center,
+                )
+              ],
+            ),
+          ),
+        ),
         appBar: AppBar(
           title: Text(people.name),
           centerTitle: true,
@@ -72,17 +100,13 @@ class _DetailsScreenState extends State<DetailsScreen> with SingleTickerProvider
         floatingActionButton: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            AnimatedBuilder(
-              animation: animationController,
-              builder: (BuildContext context, Widget? child) {
-                return Transform.scale(
-                  scale: scale.value,
-                  child: FloatingActionButton(
-                    backgroundColor: Colors.red,
-                    splashColor: Colors.blue,
-                    onPressed: () {
+            FloatingActionButton(
+              backgroundColor: Colors.red,
+              splashColor: Colors.blue,
+              onPressed: data.isConected
+                  ? () {
                       data.setPeopleReported(people);
-                      data.sendResult().then((value) {
+                      data.sendResult(people).then((value) {
                         animationController.stop();
                         if (value) {
                           Boxes.addPeople(data.people);
@@ -96,11 +120,9 @@ class _DetailsScreenState extends State<DetailsScreen> with SingleTickerProvider
                                   ));
                         }
                       });
-                    },
-                    child: const Icon(Icons.add),
-                  ),
-                );
-              },
+                    }
+                  : null,
+              child: const Icon(Icons.add),
             ),
             Text(
               "Report sighting",

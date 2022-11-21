@@ -19,7 +19,6 @@ class Fab extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
-      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         FloatingActionButton(
             heroTag: tag, onPressed: onPressed, child: Icon(icon), backgroundColor: Colors.black),

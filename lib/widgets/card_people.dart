@@ -22,12 +22,11 @@ class PeopleCard extends StatelessWidget {
       width: double.infinity,
       height: 260,
       decoration: BoxDecoration(
-          color: Colors.primaries[Random().nextInt(Colors.primaries.length)],
+          color: Colors.blue,
           borderRadius: const BorderRadius.all(
             Radius.circular(20),
           ),
-          border: Border.all(
-              width: 10, color: Colors.primaries[Random().nextInt(Colors.primaries.length)])),
+          border: Border.all(width: 10, color: Colors.green)),
       child: Column(
         children: [
           Stack(
@@ -44,7 +43,7 @@ class PeopleCard extends StatelessWidget {
                       height: 45,
                       width: 45,
                       decoration: BoxDecoration(
-                          color: Colors.primaries[Random().nextInt(Colors.primaries.length)],
+                          color: Colors.amber,
                           borderRadius: const BorderRadius.all(Radius.circular(100))),
                       child: Text(
                         people.gender != null ? people.gender!.toUpperCase() : "",
