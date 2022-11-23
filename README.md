@@ -1,2 +1,13 @@
 # StarsWar
 StarsWar
+
+
+================================================================================
+IMPORTANTE
+================================================================================
+
+MODO DE USO:
+1) UTLIZAR LA APP Y VER SU FUNCIONALDAD
+2) REVISAR LOS COMENTARIOS EN LA APP SE VAN A ENCONTRAR "TODO" CON COMENTARIOS Y EXPLICACIONES.
+3) pOR FAVOR, SERIA DE GRAN AYUDA QUE SE COMENTE LO QUE SE CREA NECESARIO MEDIANTE UN "TODO" CON LA PRIMERA PALABRA RESPUESTA
+
