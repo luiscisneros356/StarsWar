@@ -37,6 +37,15 @@ class _ListPeopleState extends State<ListPeople> with SingleTickerProviderStateM
     _controller.addListener(() {
       _currentPage = _controller.page ?? 0.0;
       setState(() {});
+
+//TODO: Pantalla de personajes: Su funcionamiento es muy confuso, se repiten
+//personajes en la lista. El cambio de color a cada rato genera difícil el uso de
+//la app.
+
+// El primer punto era por que no implemente bien los botones de paginación, ya que se me ocurrió que
+// al usar un Listview Builder y usar un controller que estuche la posición del scroll sumara a la lista de personajes los correspondientes
+//a la siguiente página. Es ese punto, parte el siguiente de los colores, que era por que usaba Colors.primaries[index]. Cuando sumaba mas personajes al hacer scroll
+//llamaba a setSate, lo que hacia que se construya el método Build de nuevo y se vuelva a asignar un nuevo color a la tarjeta, ya que no es una constante.
     });
 
     _curves = Curves.easeInOut;
@@ -56,6 +65,7 @@ class _ListPeopleState extends State<ListPeople> with SingleTickerProviderStateM
   Widget build(BuildContext context) {
     final prov = Provider.of<ProviderData>(context, listen: false);
     final mq = MediaQuery.of(context).size;
+
     return Center(
       child: Container(
         alignment: Alignment.center,

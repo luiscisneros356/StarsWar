@@ -8,6 +8,16 @@ import 'package:personajes_star_war/screens/splash.dart';
 import 'package:personajes_star_war/utils/hive.dart';
 import 'package:provider/provider.dart';
 
+/*
+===========IMPORTANTE============
+
+MODO DE USO:
+
+1) UTILIZAR LA APP Y VER SU FUNCIONALIDAD
+3) REVISAR LOS COMENTARIOS, EN LA APP SE VAN A ENCONTRAR "TODO" CON COMENTARIOS Y EXPLICACIONES.
+3) POR FAVOR, SERIA DE GRAN AYUDA Y UTILIDAD QUE SE COMENTE LO QUE SE CREA NECESARIO MEDIANTE UN "TODO" CON LA PRIMERA PALABRA RESPUESTA
+
+*/
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();

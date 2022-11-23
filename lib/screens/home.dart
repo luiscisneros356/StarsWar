@@ -37,6 +37,12 @@ class _HomeScreenState extends State<HomeScreen> {
         body: FutureBuilder(
             future: provider.getPeople(),
             builder: (context, AsyncSnapshot<List<People>> snapshot) {
+              //TODO: En el requerimiento no se solicitó que no se obtengan datos cuando la
+              //“Conexión” esta desactivada.
+              // Si es verdad, eso lo agregué yo, por que me pareció que si no no habia "Conexión", no tenia que mostrase datos.
+              //Demanera que dependiendo de los datos, se muestre algo o no.
+              //Igualmente la “Conexión” ahora solo bloquea el botón de reporte.
+
               if (snapshot.hasData && snapshot.connectionState == ConnectionState.done) {
                 if (snapshot.data != null) {
                   return const ListPeople();
@@ -82,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
 void dataProv(BuildContext context) {
   final provider = Provider.of<ProviderData>(context, listen: false);
-//TODO: esto estaablece la lógica de la navegacion de la app
+//TODO: esto estaablece la
   provider.setInitPage(false);
   provider.setIsBackFromDetail(false);
   provider.setIsBackFromReport(false);

@@ -113,6 +113,9 @@ class ProviderData extends ChangeNotifier {
 
     return _page;
   }
+//TODO: Repositories: Realizar las llamadas de API en el manejo de estados o en la
+//interfaz es una implementación erronea
+// ¿Cuál seria la implementacion adecuada?
 
   Future<List<People>> getPeople() async {
     int index = indexPage();
@@ -123,12 +126,16 @@ class ProviderData extends ChangeNotifier {
     return await ConectionsService.sendResult(p);
   }
 
-//TODO: esta función lo que permite es trabajar al objeto People, que fue seteado y seleccionado por el usuario
+//TODO: esta función lo que permite es trabajar al objeto People en lo detalles, que fue seteado y seleccionado por el usuario
 // pero como un Map. Queria hacer algo distinto a lo que normalmente se hace que es basicamente utilizar la instancia
 //de People e ir mostrando sus atributos y haciendo las validaciones tales como si la lista esta vacia, que no se
 //muestre el atributo entre otros detalles.
 //Me pareció que haciendo esto podia usar funciones  de Dart en relacion a los Maps, for, forEch, addAll, algo con lo que normalmente no trabajo mucho.
 // Se que no es lo óptimo ni lo  común, solo buscaba realizar algo diferente. Hasta cree un widget que reflejara los datos del Map.
+// Un comentario que me hicieron es te que Detalle de personaje: No obtiene los datos como corresponde de la API. No es necesario llamar de nuevo a la API de nuevo.
+//Se llama una sola vaez a la API, cuando se traer la lista de personajes de acuerdo a su página, luego se setea el personaje seleccionado en el gestor de estado,
+// y apartir de eso se muestra la informacion.
+//No es necesario llamar a la API cada vez que se elige un personaje, eso consumiria muchos recursos
 
   getInfo(People people) {
     people.toJson().forEach((key, value) {
