@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:personajes_star_war/screens/details.dart';
 
@@ -21,16 +23,16 @@ class _ListPeopleState extends State<ListPeople> with SingleTickerProviderStateM
   late PageController _controller;
   late AnimationController _animationController;
   late Animation<double> _opacity;
-
+  late Animation<double> _rotate;
   late Duration _duration;
   late Curve _curves;
   double _currentPage = 0.0;
   @override
   void initState() {
     _controller = PageController();
-    _duration = const Duration(seconds: 1);
+    _duration = const Duration(seconds: 2);
     _animationController = AnimationController(vsync: this, duration: _duration);
-
+    _rotate = Tween(begin: 0.0, end: -2.0 * pi).animate(_animationController);
     _opacity = Tween(begin: 0.0, end: 1.0).animate(_animationController);
     _controller.addListener(() {
       _currentPage = _controller.page ?? 0.0;
@@ -40,6 +42,14 @@ class _ListPeopleState extends State<ListPeople> with SingleTickerProviderStateM
     _curves = Curves.easeInOut;
 
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    _animationController.dispose();
+    _animationController.removeListener(() {});
+    super.dispose();
   }
 
   @override
@@ -73,13 +83,16 @@ class _ListPeopleState extends State<ListPeople> with SingleTickerProviderStateM
                         }),
                         child: Hero(
                             tag: people.name,
-                            child: AnimatedOpacity(
-                              opacity: _opacity.value == 0 ? 1 : _opacity.value,
-                              duration: const Duration(milliseconds: 100),
-                              child: AnimatedScale(
-                                  duration: const Duration(milliseconds: 100),
-                                  scale: scale,
-                                  child: PeopleCard(people: people)),
+                            child: Transform.rotate(
+                              angle: _rotate.value,
+                              child: AnimatedOpacity(
+                                opacity: _opacity.value == 0 ? 1 : _opacity.value,
+                                duration: const Duration(milliseconds: 100),
+                                child: AnimatedScale(
+                                    duration: const Duration(milliseconds: 100),
+                                    scale: scale,
+                                    child: PeopleCard(people: people)),
+                              ),
                             )),
                       );
                     }));

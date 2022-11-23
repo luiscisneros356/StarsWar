@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 
 import 'package:personajes_star_war/models/people.dart';
-
 import 'package:personajes_star_war/utils/image_assets.dart';
-import 'package:personajes_star_war/utils/style.dart';
-
 import 'package:provider/provider.dart';
 
 import '../provider/provider.dart';
+import '../utils/loading.dart';
 import '../widgets/fab.dart';
 import '../widgets/list_people.dart';
 import '../widgets/no_conection.dart';
@@ -44,24 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   return const ListPeople();
                 }
               } else if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(
-                    child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const SizedBox(
-                      height: 50,
-                      width: 50,
-                      child: CircularProgressIndicator(
-                        strokeWidth: 10,
-                      ),
-                    ),
-                    const SizedBox(height: 50),
-                    Text(
-                      "Loading people",
-                      style: AppTextStyle.title(color: Colors.black),
-                    )
-                  ],
-                ));
+                return const Loading();
               }
 
               return const NoConection();
@@ -73,9 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
             Fab(
               name: "Back\nPage",
               onPressed: () {
-                provider.setInitPage(false);
-                provider.setIsBackFromDetail(false);
-                provider.setIsBackFromReport(false);
+                dataProv(context);
                 provider.setIsNextPage(false);
 
                 setState(() {});
@@ -86,10 +65,8 @@ class _HomeScreenState extends State<HomeScreen> {
             Fab(
               name: "Next\npage",
               onPressed: () {
-                provider.setInitPage(false);
+                dataProv(context);
 
-                provider.setIsBackFromDetail(false);
-                provider.setIsBackFromReport(false);
                 provider.setIsNextPage(true);
                 setState(() {});
               },
@@ -101,11 +78,12 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+}
 
-  // Future<void> conected() async {
-  //   final conected =
-  //       await showDialog(context: context, builder: (context) => const NoConectionDialog());
-  //   Provider.of<ProviderData>(context, listen: false).setIsConected(conected);
-  //   setState(() {});
-  // }
+void dataProv(BuildContext context) {
+  final provider = Provider.of<ProviderData>(context, listen: false);
+//TODO: esto estaablece la lógica de la navegacion de la app
+  provider.setInitPage(false);
+  provider.setIsBackFromDetail(false);
+  provider.setIsBackFromReport(false);
 }

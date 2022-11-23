@@ -32,4 +32,17 @@ class RoutesApp {
       },
     );
   }
+
+  static Route routeTransition2(Widget route) {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => route,
+      transitionDuration: const Duration(seconds: 2),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        return FadeTransition(
+          opacity: Tween(begin: 0.0, end: 1.0).animate(animation),
+          child: child,
+        );
+      },
+    );
+  }
 }

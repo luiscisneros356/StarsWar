@@ -12,6 +12,7 @@ class ProviderData extends ChangeNotifier {
   int _page = 0;
   int get page => _page;
 
+//TODO: todos los siguientes booleanos sirven para determinar la navegacion y el estado de la app.
   bool _isInitPage = false;
   bool get isInitPage => _isInitPage;
   void setInitPage(bool v) {
@@ -81,8 +82,10 @@ class ProviderData extends ChangeNotifier {
     "starships",
     "vehicles"
   ];
+
   int indexPage() {
     if (_isInitPage) {
+      //TODO: Si el usuario reincia la app, se va a llamar a la última pagina guardada
       return Boxes.getPage();
     } else {
       if (backFromDetail || backFromReport) {
@@ -93,6 +96,9 @@ class ProviderData extends ChangeNotifier {
     }
   }
 
+//TODO: Paginación y guardado de la página en Boxes
+//si, se llega al limite de páginas, se vuelve a mostrar la primera,
+//igualmente también se lanza la excepcion en la llamada a la API
   int paginated() {
     _page = Boxes.getPage();
 
@@ -110,13 +116,19 @@ class ProviderData extends ChangeNotifier {
 
   Future<List<People>> getPeople() async {
     int index = indexPage();
-
     return listPeople = await ConectionsService.getResults(index);
   }
 
   Future<bool> sendResult(People p) async {
     return await ConectionsService.sendResult(p);
   }
+
+//TODO: esta función lo que permite es trabajar al objeto People, que fue seteado y seleccionado por el usuario
+// pero como un Map. Queria hacer algo distinto a lo que normalmente se hace que es basicamente utilizar la instancia
+//de People e ir mostrando sus atributos y haciendo las validaciones tales como si la lista esta vacia, que no se
+//muestre el atributo entre otros detalles.
+//Me pareció que haciendo esto podia usar funciones  de Dart en relacion a los Maps, for, forEch, addAll, algo con lo que normalmente no trabajo mucho.
+// Se que no es lo óptimo ni lo  común, solo buscaba realizar algo diferente. Hasta cree un widget que reflejara los datos del Map.
 
   getInfo(People people) {
     people.toJson().forEach((key, value) {
@@ -129,10 +141,10 @@ class ProviderData extends ChangeNotifier {
         peopleData.addAll(tempMap);
       }
     });
-    //  dev.log(peopleData.toString());
 
     int emojiIndex = 0;
     peopleData.forEach((key, value) {
+//Widget que creado para leer un Map con valores dinámicos y hace sus respectivas validaciones segun el valor que tengan-
       datos.add(PeopleData(
         keey: key,
         value: value,

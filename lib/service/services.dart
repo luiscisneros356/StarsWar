@@ -13,8 +13,6 @@ class ConectionsService {
       final resp = await http.get(url2);
 
       if (resp.statusCode == 200) {
-        //   listPeople.addAll(PaginatedResult.fromJson(json.decode(utf8.decode(resp.bodyBytes))).results);
-
         return PaginatedResult.fromJson(jsonDecode(utf8.decode(resp.bodyBytes))).results;
       }
 
@@ -26,21 +24,25 @@ class ConectionsService {
   }
 
   static Future<bool> sendResult(People people) async {
-    final url = Uri.parse("https://jsonplaceholder.typicode.com/posts");
-    final int userId = Random().nextInt(50);
+    try {
+      final url = Uri.parse("https://jsonplaceholder.typicode.com/posts");
+      final int userId = Random().nextInt(50);
 
-    Map<String, dynamic> body = {
-      "userId": "$userId",
-      "dateTime": people.created.toString(),
-      "character_name": people.name
-    };
+      Map<String, dynamic> body = {
+        "userId": "$userId",
+        "dateTime": people.created.toString(),
+        "character_name": people.name
+      };
 
-    final resp = await http.post(url, body: body);
+      final resp = await http.post(url, body: body);
 
-    if (resp.statusCode == 200 || resp.statusCode == 201) {
-      return true;
-    } else {
-      return false;
+      if (resp.statusCode == 200 || resp.statusCode == 201) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      throw Exception(e.toString());
     }
   }
 }

@@ -52,7 +52,7 @@ class _ReportedListState extends State<ReportedList> with SingleTickerProviderSt
               leading: IconButton(
                   onPressed: () {
                     prov.setIsBackFromReport(true);
-                    Navigator.push(context, RoutesApp.routeTransition(const HomeScreen()));
+                    Navigator.push(context, RoutesApp.routeTransition2(const HomeScreen()));
                   },
                   icon: const Icon(Icons.arrow_back)),
             ),

@@ -2,19 +2,22 @@ import 'package:hive/hive.dart';
 import 'package:personajes_star_war/models/people.dart';
 
 class Boxes {
+  //TODO: aca guardo y leo 3 datos:
+  //1- La lista de personajes reportados
+  //2- La página que llama a la API
+  //3- La conexion para reportar un personaje
   static Box<People> listReportedPeople() => Hive.box("people");
   static Box<int> currentPage() => Hive.box("page");
   static Box<int> isConnected() => Hive.box("connected");
 
   static void putPage(int page) async {
     final box = currentPage();
-
     await box.put("page", page);
   }
 
   static int getPage() {
     final box = currentPage();
-    return box.get("page") ?? 0;
+    return box.get("page") ?? 1;
   }
 
   static void putConnection(int value) async {

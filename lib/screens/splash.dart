@@ -49,6 +49,7 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
   @override
   void dispose() {
     animationController.dispose();
+    animationController.removeListener(() {});
     super.dispose();
   }
 
